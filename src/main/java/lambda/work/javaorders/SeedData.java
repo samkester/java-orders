@@ -20,7 +20,7 @@ import java.util.Set;
 
 
 @Transactional
-@Component // comment out this line to disable java-side data seeding
+//@Component // comment out this line to disable java-side data seeding
 public class SeedData implements CommandLineRunner
 {
     /**

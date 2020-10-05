@@ -31,7 +31,7 @@ public class Order {
     private Customer customer;
 
     @ManyToMany
-    @JoinTable(name = "orderpayments",
+    @JoinTable(name = "orderspayments",
         joinColumns = @JoinColumn(name = "ordnum"),
         inverseJoinColumns = @JoinColumn(name = "paymentid")
     )
