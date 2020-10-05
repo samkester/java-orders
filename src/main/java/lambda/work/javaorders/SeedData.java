@@ -1,4 +1,4 @@
-package com.lambdaschool.crudyorders;
+package lambda.work.javaorders;
 
 import com.github.javafaker.Faker;
 import com.lambdaschool.crudyorders.models.Agent;
