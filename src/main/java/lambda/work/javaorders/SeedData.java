@@ -4,9 +4,9 @@ import lambda.work.javaorders.models.Agent;
 import lambda.work.javaorders.models.Customer;
 import lambda.work.javaorders.models.Order;
 import lambda.work.javaorders.models.Payment;
-import lambda.work.javaorders.repositories.AgentsRepository;
-import lambda.work.javaorders.repositories.CustomersRepository;
-import lambda.work.javaorders.repositories.OrdersRepository;
+import lambda.work.javaorders.repositories.AgentRepository;
+import lambda.work.javaorders.repositories.CustomerRepository;
+import lambda.work.javaorders.repositories.OrderRepository;
 import lambda.work.javaorders.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,26 +20,26 @@ import java.util.Set;
 
 
 @Transactional
-@Component
+@Component // comment out this line to disable java-side data seeding
 public class SeedData implements CommandLineRunner
 {
     /**
      * Connects the customer table to this SeedData method
      */
     @Autowired
-    private CustomersRepository custrepos;
+    private CustomerRepository custrepos;
 
     /**
      * Connects the agents table to this SeedData method
      */
     @Autowired
-    private AgentsRepository agentrepos;
+    private AgentRepository agentrepos;
 
     /**
      * Connects the orders table to this SeedData method
      */
     @Autowired
-    private OrdersRepository ordersrepos;
+    private OrderRepository orderrepos;
 
     /**
      * Connects the payment table to this SeedData method
