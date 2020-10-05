@@ -519,17 +519,17 @@ public class SeedData implements CommandLineRunner
         custrepos.save(c24);
         custrepos.save(c25);
 
-        ordersrepos.save(o01);
-        ordersrepos.save(o02);
-        ordersrepos.save(o03);
-        ordersrepos.save(o04);
-        ordersrepos.save(o05);
-        ordersrepos.save(o06);
-        ordersrepos.save(o07);
-        ordersrepos.save(o08);
-        ordersrepos.save(o09);
-        ordersrepos.save(o10);
-        ordersrepos.save(o11);
-        ordersrepos.save(o12);
+        orderrepos.save(o01);
+        orderrepos.save(o02);
+        orderrepos.save(o03);
+        orderrepos.save(o04);
+        orderrepos.save(o05);
+        orderrepos.save(o06);
+        orderrepos.save(o07);
+        orderrepos.save(o08);
+        orderrepos.save(o09);
+        orderrepos.save(o10);
+        orderrepos.save(o11);
+        orderrepos.save(o12);
     }
 }

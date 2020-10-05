@@ -37,7 +37,7 @@ public class Order {
     )
     private Set<Payment> payments = new HashSet<>();
 
-    public Order(double ordamount, double advanceamount, String orderdescription, Customer customer) {
+    public Order(double ordamount, double advanceamount, Customer customer, String orderdescription) {
         this.ordamount = ordamount;
         this.advanceamount = advanceamount;
         this.orderdescription = orderdescription;
@@ -94,6 +94,8 @@ public class Order {
     public void setPayments(Set<Payment> payments) {
         this.payments = payments;
     }
+
+    public void addPayments(Payment payment) { this.payments.add(payment); }
 
     @Override
     public String toString() {
