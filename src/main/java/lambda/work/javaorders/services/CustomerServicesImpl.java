@@ -33,7 +33,7 @@ public class CustomerServicesImpl implements CustomerServices {
     @Override
     public Customer getCustomerById(long id) {
         Customer result = customerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Restaurant with ID " + id + " does not exist."));
+                .orElseThrow(() -> new EntityNotFoundException("Customer with ID '" + id + "' does not exist."));
         return result;
     }
 

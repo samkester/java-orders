@@ -36,7 +36,7 @@ public class CustomerController {
     }
 
     // http://localhost:2019/customers/namelike/{substring}
-    @GetMapping(value = "/orders", produces = {"application/json"})
+    @GetMapping(value = "/namelike/{substring}", produces = {"application/json"})
     public ResponseEntity<?> getCustomersByNameSubstring(@PathVariable String substring)
     {
         List<Customer> result = customerService.getCustomersByNameSubstring(substring);
