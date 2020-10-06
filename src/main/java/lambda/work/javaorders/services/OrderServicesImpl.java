@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Transactional
 @Service(value = "orderService")
@@ -19,6 +20,11 @@ public class OrderServicesImpl implements OrderServices {
     @Override
     public Order save(Order order) {
         return orderRepository.save(order);
+    }
+
+    @Override
+    public List<Order> getOrdersWithAdvance() {
+        return null;
     }
 
     @Override
