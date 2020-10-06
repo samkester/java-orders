@@ -24,7 +24,8 @@ public class OrderServicesImpl implements OrderServices {
 
     @Override
     public List<Order> getOrdersWithAdvance() {
-        return null;
+        List<Order> result = orderRepository.findByAdvanceamountGreaterThan(0);
+        return result;
     }
 
     @Override
