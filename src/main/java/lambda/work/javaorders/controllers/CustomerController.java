@@ -2,6 +2,7 @@ package lambda.work.javaorders.controllers;
 
 import lambda.work.javaorders.models.Customer;
 import lambda.work.javaorders.services.CustomerServices;
+import lambda.work.javaorders.views.CustomerOrderCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
