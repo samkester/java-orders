@@ -1,14 +1,13 @@
-package com.lambdaschool.crudyorders;
+package lambda.work.javaorders;
 
-import com.github.javafaker.Faker;
-import com.lambdaschool.crudyorders.models.Agent;
-import com.lambdaschool.crudyorders.models.Customer;
-import com.lambdaschool.crudyorders.models.Order;
-import com.lambdaschool.crudyorders.models.Payment;
-import com.lambdaschool.crudyorders.repositories.AgentsRepository;
-import com.lambdaschool.crudyorders.repositories.CustomersRepository;
-import com.lambdaschool.crudyorders.repositories.OrdersRepository;
-import com.lambdaschool.crudyorders.repositories.PaymentRepository;
+import lambda.work.javaorders.models.Agent;
+import lambda.work.javaorders.models.Customer;
+import lambda.work.javaorders.models.Order;
+import lambda.work.javaorders.models.Payment;
+import lambda.work.javaorders.repositories.AgentRepository;
+import lambda.work.javaorders.repositories.CustomerRepository;
+import lambda.work.javaorders.repositories.OrderRepository;
+import lambda.work.javaorders.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -21,26 +20,26 @@ import java.util.Set;
 
 
 @Transactional
-@Component
+//@Component // comment out this line to disable java-side data seeding
 public class SeedData implements CommandLineRunner
 {
     /**
      * Connects the customer table to this SeedData method
      */
     @Autowired
-    private CustomersRepository custrepos;
+    private CustomerRepository custrepos;
 
     /**
      * Connects the agents table to this SeedData method
      */
     @Autowired
-    private AgentsRepository agentrepos;
+    private AgentRepository agentrepos;
 
     /**
      * Connects the orders table to this SeedData method
      */
     @Autowired
-    private OrdersRepository ordersrepos;
+    private OrderRepository orderrepos;
 
     /**
      * Connects the payment table to this SeedData method
@@ -520,17 +519,17 @@ public class SeedData implements CommandLineRunner
         custrepos.save(c24);
         custrepos.save(c25);
 
-        ordersrepos.save(o01);
-        ordersrepos.save(o02);
-        ordersrepos.save(o03);
-        ordersrepos.save(o04);
-        ordersrepos.save(o05);
-        ordersrepos.save(o06);
-        ordersrepos.save(o07);
-        ordersrepos.save(o08);
-        ordersrepos.save(o09);
-        ordersrepos.save(o10);
-        ordersrepos.save(o11);
-        ordersrepos.save(o12);
+        orderrepos.save(o01);
+        orderrepos.save(o02);
+        orderrepos.save(o03);
+        orderrepos.save(o04);
+        orderrepos.save(o05);
+        orderrepos.save(o06);
+        orderrepos.save(o07);
+        orderrepos.save(o08);
+        orderrepos.save(o09);
+        orderrepos.save(o10);
+        orderrepos.save(o11);
+        orderrepos.save(o12);
     }
 }
