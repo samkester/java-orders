@@ -97,11 +97,46 @@ public class CustomerServicesImpl implements CustomerServices {
 
     @Override
     public Customer update(Customer customer, long id) {
-        return null;
+        Customer newCustomer = customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Could not find customer with id '" + customer.getCustcode() + "' to update."));
+
+        if(customer.getCustname() != null) newCustomer.setCustname(customer.getCustname());
+        if(customer.getCustcity() != null) newCustomer.setCustcity(customer.getCustcity());
+        if(customer.getWorkingarea() != null) newCustomer.setWorkingarea(customer.getWorkingarea());
+        if(customer.getCustcountry() != null) newCustomer.setCustcountry(customer.getCustcountry());
+        if(customer.getGrade() != null) newCustomer.setGrade(customer.getGrade());
+        if(customer.hasvalueforopeningamt) newCustomer.setOpeningamt(customer.getOpeningamt());
+        if(customer.hasvalueforrecieveamt) newCustomer.setReceiveamt(customer.getReceiveamt());
+        if(customer.hasvalueforpaymentamt) newCustomer.setPaymentamt(customer.getPaymentamt());
+        if(customer.hasvalueforoutstandingamt) newCustomer.setOutstandingamt(customer.getOutstandingamt());
+        if(customer.getPhone() != null) newCustomer.setPhone(customer.getPhone());
+
+        if(customer.getAgent() != null) {
+            Agent agent = agentRepository.findById(customer.getAgent().getAgentcode())
+                    .orElseThrow(() -> new EntityNotFoundException("Could not find agent with id '" + customer.getAgent().getAgentcode() + "' for updated customer named '" + customer.getCustname() + "'."));
+
+            newCustomer.setAgent(agent);
+
+            agent.getCustomers().add(newCustomer);
+        }
+
+        if(customer.hasvaluefororders) {
+            newCustomer.getOrders().clear();
+            for (Order o : customer.getOrders()) {
+                Order nO = new Order(o.getOrdamount(), o.getAdvanceamount(), newCustomer, o.getOrderdescription());
+                for (Payment p : o.getPayments()) {
+                    Payment nP = paymentRepository.findById(p.getPaymentid())
+                            .orElseThrow(() -> new EntityNotFoundException("Could not find payment with id '" + p.getPaymentid() + "' for updated customer named '" + customer.getCustname() + "'."));
+                    nO.addPayments(nP);
+                }
+                newCustomer.getOrders().add(nO);
+            }
+        }
+
+        return customerRepository.save(newCustomer);
     }
 
     @Override
     public void delete(long id) {
-
+        customerRepository.deleteById(id);
     }
 }
