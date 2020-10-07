@@ -10,6 +10,8 @@ package lambda.work.javaorders.models;
  * COUNTRY string
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class Agent {
     private String country;
 
     @OneToMany(mappedBy = "agent")
+    @JsonIgnoreProperties(value = "agent", allowSetters = true)
     private List<Customer> customers = new ArrayList<>();
 
     public Agent(String agentname, String workingarea, double commission, String phone, String country) {
