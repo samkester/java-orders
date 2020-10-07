@@ -11,7 +11,5 @@ public interface OrderServices {
 
     List<Order> getOrdersWithAdvance();
 
-    Order update(Order order, long id);
-
     void delete(long id);
 }
