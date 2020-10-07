@@ -26,4 +26,14 @@ public class AgentServicesImpl implements AgentServices {
                 .orElseThrow(() -> new EntityNotFoundException("Agent with ID '" + id + "' does not exist."));
         return result;
     }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public void deleteIfUnassigned(long id) {
+
+    }
 }

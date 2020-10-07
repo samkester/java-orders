@@ -1,7 +1,11 @@
 package lambda.work.javaorders.services;
 
+import lambda.work.javaorders.models.Agent;
 import lambda.work.javaorders.models.Customer;
+import lambda.work.javaorders.models.Order;
+import lambda.work.javaorders.models.Payment;
 import lambda.work.javaorders.repositories.CustomerRepository;
+import lambda.work.javaorders.repositories.PaymentRepository;
 import lambda.work.javaorders.views.CustomerOrderCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +20,46 @@ import java.util.List;
 public class CustomerServicesImpl implements CustomerServices {
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    PaymentRepository paymentRepository;
 
     @Transactional
     @Override
     public Customer save(Customer customer) {
-        return customerRepository.save(customer);
+        Agent agent = customer.getAgent();
+
+        if(agent == null)
+        {
+            throw new EntityNotFoundException("Could not find agent for new customer.");
+        }
+
+        Customer newCustomer = new Customer();
+        newCustomer.setCustname(customer.getCustname());
+        newCustomer.setCustcity(customer.getCustcity());
+        newCustomer.setWorkingarea(customer.getWorkingarea());
+        newCustomer.setCustcountry(customer.getCustcountry());
+        newCustomer.setGrade(customer.getGrade());
+        newCustomer.setOpeningamt(customer.getOpeningamt());
+        newCustomer.setReceiveamt(customer.getReceiveamt());
+        newCustomer.setPaymentamt(customer.getPaymentamt());
+        newCustomer.setOutstandingamt(customer.getOutstandingamt());
+        newCustomer.setAgent(agent);
+
+        agent.getCustomers().add(newCustomer);
+
+        for (Order o : customer.getOrders())
+        {
+            Order nO = new Order(o.getOrdamount(), o.getAdvanceamount(), newCustomer, o.getOrderdescription());
+            for (Payment p : o.getPayments())
+            {
+                Payment nP = paymentRepository.findById(p.getPaymentid())
+                    .orElseThrow(() -> new EntityNotFoundException("Could not find payment with id '" + p.getPaymentid() + "' for new customer named '" + customer.getCustname() + "'."));
+                nO.addPayments(nP);
+            }
+            newCustomer.getOrders().add(nO);
+        }
+
+        return customerRepository.save(newCustomer);
     }
 
     @Override
@@ -47,5 +86,15 @@ public class CustomerServicesImpl implements CustomerServices {
     public List<CustomerOrderCount> getCustomersByOrderCount() {
         List<CustomerOrderCount> result = customerRepository.findCustomerOrderCounts();
         return result;
+    }
+
+    @Override
+    public Customer update(Customer customer, long id) {
+        return null;
+    }
+
+    @Override
+    public void delete(long id) {
+
     }
 }

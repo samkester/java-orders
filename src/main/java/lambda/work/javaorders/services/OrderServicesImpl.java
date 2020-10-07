@@ -34,4 +34,14 @@ public class OrderServicesImpl implements OrderServices {
                 .orElseThrow(() -> new EntityNotFoundException("Order with ID '" + id + "' does not exist."));
         return result;
     }
+
+    @Override
+    public Order update(Order order, long id) {
+        return null;
+    }
+
+    @Override
+    public void delete(long id) {
+
+    }
 }
