@@ -4,6 +4,7 @@ import lambda.work.javaorders.models.Agent;
 import lambda.work.javaorders.models.Customer;
 import lambda.work.javaorders.models.Order;
 import lambda.work.javaorders.models.Payment;
+import lambda.work.javaorders.repositories.AgentRepository;
 import lambda.work.javaorders.repositories.CustomerRepository;
 import lambda.work.javaorders.repositories.PaymentRepository;
 import lambda.work.javaorders.views.CustomerOrderCount;
@@ -22,17 +23,12 @@ public class CustomerServicesImpl implements CustomerServices {
     CustomerRepository customerRepository;
     @Autowired
     PaymentRepository paymentRepository;
+    @Autowired
+    AgentRepository agentRepository;
 
     @Transactional
     @Override
     public Customer save(Customer customer) {
-        Agent agent = customer.getAgent();
-
-        if(agent == null)
-        {
-            throw new EntityNotFoundException("Could not find agent for new customer.");
-        }
-
         Customer newCustomer = new Customer();
         newCustomer.setCustname(customer.getCustname());
         newCustomer.setCustcity(customer.getCustcity());
@@ -43,6 +39,11 @@ public class CustomerServicesImpl implements CustomerServices {
         newCustomer.setReceiveamt(customer.getReceiveamt());
         newCustomer.setPaymentamt(customer.getPaymentamt());
         newCustomer.setOutstandingamt(customer.getOutstandingamt());
+        newCustomer.setPhone(customer.getPhone());
+
+        Agent agent = agentRepository.findById(customer.getAgent().getAgentcode())
+                .orElseThrow(() -> new EntityNotFoundException("Could not find agent with id '" + customer.getAgent().getAgentcode() + "' for new customer named '" + customer.getCustname() + "'."));
+
         newCustomer.setAgent(agent);
 
         agent.getCustomers().add(newCustomer);
