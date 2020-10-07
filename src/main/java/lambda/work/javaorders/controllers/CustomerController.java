@@ -6,12 +6,10 @@ import lambda.work.javaorders.views.CustomerOrderCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/customers")
@@ -49,5 +47,38 @@ public class CustomerController {
     {
         List<CustomerOrderCount> result = customerService.getCustomersByOrderCount();
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // http://localhost:2019/customers/customer
+    @PostMapping(value = "/customer", consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<?> postCustomer(@Valid @RequestBody Customer body)
+    {
+        body = customerService.save(body);
+        return new ResponseEntity<>(body, HttpStatus.CREATED);
+    }
+
+    // http://localhost:2019/customers/customer/{id}
+    @PutMapping(value = "/customer/{id}", consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<?> putCustomer(@Valid @RequestBody Customer body, @PathVariable long id)
+    {
+        body.setCustcode(id);
+        body = customerService.save(body);
+        return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+
+    // http://localhost:2019/customers/customer/{id}
+    @PatchMapping(value = "/customer/{id}", consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<?> patchCustomer(@Valid @RequestBody Customer body, @PathVariable long id)
+    {
+        body = customerService.update(body, id);
+        return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+
+    // http://localhost:2019/customers/customer/{id}
+    @DeleteMapping(value = "/customer/{id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable long id)
+    {
+        customerService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
