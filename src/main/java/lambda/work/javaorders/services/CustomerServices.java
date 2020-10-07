@@ -15,4 +15,8 @@ public interface CustomerServices {
     List<Customer> getCustomersByNameSubstring(String substring);
 
     List<CustomerOrderCount> getCustomersByOrderCount();
+
+    Customer update(Customer customer, long id);
+
+    void delete(long id);
 }

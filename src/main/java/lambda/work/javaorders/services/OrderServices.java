@@ -10,4 +10,8 @@ public interface OrderServices {
     Order getOrderById(long id);
 
     List<Order> getOrdersWithAdvance();
+
+    Order update(Order order, long id);
+
+    void delete(long id);
 }
