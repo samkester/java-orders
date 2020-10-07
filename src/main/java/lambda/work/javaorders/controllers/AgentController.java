@@ -25,7 +25,7 @@ public class AgentController {
     }
 
     // http://localhost:2019/agents/unassigned/{id}
-    @DeleteMapping(value = "/agents/unassigned/{id}")
+    @DeleteMapping(value = "/unassigned/{id}")
     public ResponseEntity<?> deleteAgentIfUnassigned(@PathVariable long id)
     {
         agentService.deleteIfUnassigned(id);

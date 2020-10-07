@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 @Transactional
@@ -29,11 +30,19 @@ public class AgentServicesImpl implements AgentServices {
 
     @Override
     public void clear() {
-
+        agentRepository.deleteAll();
     }
 
     @Override
     public void deleteIfUnassigned(long id) {
-
+        Agent agent = getAgentById(id);
+        if(agent.getCustomers().size() == 0)
+        {
+            agentRepository.deleteById(id);
+        }
+        else
+        {
+            throw new EntityExistsException("Agent with ID '" + id + "' cannot be deleted because it has customer(s).");
+        }
     }
 }
