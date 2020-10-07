@@ -41,6 +41,12 @@ public class CustomerServicesImpl implements CustomerServices {
         newCustomer.setOutstandingamt(customer.getOutstandingamt());
         newCustomer.setPhone(customer.getPhone());
 
+        if(customer.getCustcode() != 0)
+        {
+            customerRepository.findById(customer.getCustcode()).orElseThrow(() -> new EntityNotFoundException("Could not find customer with id '" + customer.getCustcode() + "' to update."));
+            newCustomer.setCustcode(customer.getCustcode());
+        }
+
         Agent agent = agentRepository.findById(customer.getAgent().getAgentcode())
                 .orElseThrow(() -> new EntityNotFoundException("Could not find agent with id '" + customer.getAgent().getAgentcode() + "' for new customer named '" + customer.getCustname() + "'."));
 
