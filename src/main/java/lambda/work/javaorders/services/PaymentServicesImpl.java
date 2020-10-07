@@ -17,4 +17,9 @@ public class PaymentServicesImpl implements PaymentServices {
     public Payment save(Payment payment) {
         return paymentRepository.save(payment);
     }
+
+    @Override
+    public void clear() {
+        paymentRepository.deleteAll();
+    }
 }

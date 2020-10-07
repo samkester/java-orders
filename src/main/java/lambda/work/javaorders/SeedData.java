@@ -8,6 +8,8 @@ import lambda.work.javaorders.repositories.AgentRepository;
 import lambda.work.javaorders.repositories.CustomerRepository;
 import lambda.work.javaorders.repositories.OrderRepository;
 import lambda.work.javaorders.repositories.PaymentRepository;
+import lambda.work.javaorders.services.AgentServices;
+import lambda.work.javaorders.services.PaymentServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -47,6 +49,12 @@ public class SeedData implements CommandLineRunner
     @Autowired
     private PaymentRepository paymentrepos;
 
+    @Autowired
+    private PaymentServices paymentService;
+
+    @Autowired
+    private AgentServices agentService;
+
     /**
      * Generates test, seed data for our application
      * First a set of known data is seeded into our database.
@@ -60,6 +68,9 @@ public class SeedData implements CommandLineRunner
     @Override
     public void run(String[] args) throws Exception
     {
+        paymentService.clear();
+        agentService.clear();
+
         Payment pay1 = new Payment("Cash");
         Payment pay2 = new Payment("Gift Card");
         Payment pay3 = new Payment("Credit Card");
